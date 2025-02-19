@@ -1,6 +1,6 @@
 import numpy as np
 
-def levy_walk(n_steps, alpha, x_range=[-50000, 50000], y_range=[-50000, 50000]):    
+def levy_walk_3(n_steps, alpha, x_range=[-50000, 50000], y_range=[-50000, 50000]):    
     positions = np.zeros((n_steps, 2))
 
     x, y = np.random.uniform(x_range[0], x_range[1]), np.random.uniform(y_range[0], y_range[1])
