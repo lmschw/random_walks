@@ -10,19 +10,20 @@ def brownian_motion_2d(num_steps, dt=1.0, sigma=1.0):
     positions_x = np.cumsum(steps_x)
     positions_y = np.cumsum(steps_y)
     
-    return positions_x, positions_y
+    return np.column_stack((positions_x, positions_y))
 
-# Parameters
-num_steps = 1000
-dt = 1.0  # Time step
-sigma = 1.0  # Standard deviation of the step
+if __name__ == "__main__":
+    # Parameters
+    num_steps = 1000
+    dt = 1.0  # Time step
+    sigma = 1.0  # Standard deviation of the step
 
-# Perform 2D Brownian motion
-positions_x, positions_y = brownian_motion_2d(num_steps, dt, sigma)
+    # Perform 2D Brownian motion
+    positions_x, positions_y = brownian_motion_2d(num_steps, dt, sigma)
 
-# Plot the 2D Brownian motion path
-plt.plot(positions_x, positions_y)
-plt.title(f'2D Brownian Motion with {num_steps} steps')
-plt.xlabel('X Position')
-plt.ylabel('Y Position')
-plt.show()
+    # Plot the 2D Brownian motion path
+    plt.plot(positions_x, positions_y)
+    plt.title(f'2D Brownian Motion with {num_steps} steps')
+    plt.xlabel('X Position')
+    plt.ylabel('Y Position')
+    plt.show()
