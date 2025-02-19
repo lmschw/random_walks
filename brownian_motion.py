@@ -12,6 +12,13 @@ def brownian_motion_2d(num_steps, dt=1.0, sigma=1.0):
     
     return np.column_stack((positions_x, positions_y))
 
+def brownian_motion_2d_without_sigma(N, delta_t=1):
+    steps_x = np.random.normal(0, np.sqrt(delta_t), N)
+    steps_y = np.random.normal(0, np.sqrt(delta_t), N)
+    trajectory_x = np.cumsum(steps_x)
+    trajectory_y = np.cumsum(steps_y)
+    return np.column_stack((trajectory_x, trajectory_y))
+
 if __name__ == "__main__":
     # Parameters
     num_steps = 1000
