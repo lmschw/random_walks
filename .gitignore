@@ -1,0 +1,13 @@
+.git
+/__pycache__
+__pycache__
+*.pyc
+*.swp
+.DS_Store
+*.mp4
+*.json
+*.png
+*.svg
+*.jpeg
+*.csv
+*.pdf
