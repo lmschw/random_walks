@@ -19,10 +19,10 @@ if __name__ == "__main__":
     sigma = 1.0  # Standard deviation of the step
 
     # Perform 2D Brownian motion
-    positions_x, positions_y = brownian_motion_2d(num_steps, dt, sigma)
+    positions = brownian_motion_2d(num_steps, dt, sigma)
 
     # Plot the 2D Brownian motion path
-    plt.plot(positions_x, positions_y)
+    plt.plot(positions[:,0], positions[:,1])
     plt.title(f'2D Brownian Motion with {num_steps} steps')
     plt.xlabel('X Position')
     plt.ylabel('Y Position')
