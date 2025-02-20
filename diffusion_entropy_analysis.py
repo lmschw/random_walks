@@ -3,6 +3,10 @@ import matplotlib.pyplot as plt
 from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
 
+"""
+WARNING: still returns lower values for Lévy walk than for Brownian motion. TODO: fix
+"""
+
 N = 1000000
 A = 1.5
 
