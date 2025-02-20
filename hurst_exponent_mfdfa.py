@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 
 from levy_walk import levy_walk_simulation
 #from levy_walk_2 import levy_walk
-from levy_walk_3 import levy_walk
-from brownian_motion import brownian_motion_2d
+from levy_walk_3 import levy_walk_3
+from brownian_motion import brownian_motion_2d_without_sigma
 
 def compute_hurst_exponent(trajectory, lag, q, order):
     lag, dfa = MFDFA(trajectory, lag = lag, q = q, order = order)
@@ -37,8 +37,8 @@ B = 1
 steps = int(t_final / delta_t)
 print(f"STEPS: {steps}")
 #trajectory = levy_walk_simulation(steps, DIST_TYPE, A, B)
-trajectory = levy_walk(steps, A)
-#trajectory = brownian_motion_2d(steps)
+trajectory = levy_walk_3(steps, A)
+#trajectory = brownian_motion_2d_without_sigma(steps)
 
 lag = np.unique(np.logspace(0.5, 3, 100).astype(int))
 # Notice these must be ints, since these will segment

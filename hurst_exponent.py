@@ -16,8 +16,8 @@ B = 1
 random_changes = 1. + np.random.randn(99999) / 1000.
 series = np.cumprod(random_changes)  # create a random walk from random changes
 #trajectory = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
-trajectory = levy_walk(STEPS, A)
-#trajectory = brownian_motion_2d(STEPS)
+#trajectory = levy_walk(STEPS, A)
+trajectory = brownian_motion_2d(STEPS)
 
 persistent = random_walk(99999, proba=0.7)
 # Evaluate Hurst equation

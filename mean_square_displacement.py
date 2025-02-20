@@ -102,13 +102,13 @@ STEPS = 100000
 DIST_TYPE = 3
 A = 1.5         
 B = 1
-#trajectory = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
-trajectory_l = levy_walk_3(STEPS, A)
+trajectory_l = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
+#trajectory_l = levy_walk_3(STEPS, A)
 trajectory_b = brownian_motion_2d_without_sigma(STEPS)
 
 run_for_trajectories(trajectory_b=trajectory_b, trajectory_l=trajectory_l)
 
-trajectory_l = levy_walk(STEPS, A)
-trajectory_b = brownian_motion_2d(STEPS)
+# trajectory_l = levy_walk(STEPS, A)
+# trajectory_b = brownian_motion_2d(STEPS)
 
-run_for_trajectories(trajectory_b=trajectory_b, trajectory_l=trajectory_l)
+# run_for_trajectories(trajectory_b=trajectory_b, trajectory_l=trajectory_l)

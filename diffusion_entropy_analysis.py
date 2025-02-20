@@ -2,14 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 from levy_walk import levy_walk_simulation
 #from levy_walk_2 import levy_walk
-from levy_walk_3 import levy_walk
-from brownian_motion import brownian_motion_2d
+from levy_walk_3 import levy_walk_3
+from brownian_motion import brownian_motion_2d_without_sigma
 
 N = 1000000
 A = 1.5
 
-bm_data = brownian_motion_2d(num_steps=N)[:,0] # just 1d
-levy_data = levy_walk(N, A)[:,0] # just 1d
+bm_data = brownian_motion_2d_without_sigma(N)[:,0] # just 1d
+levy_data = levy_walk_3(N, A)[:,0] # just 1d
 
 # Plotting the data
 plt.figure(figsize=(10, 6))

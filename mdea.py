@@ -1,4 +1,6 @@
-"""Diffusion entropy analysis core methods."""
+"""
+copied and adapted from https://github.com/garland-culbreth/pymdea/
+"""
 
 import logging
 from pathlib import Path
