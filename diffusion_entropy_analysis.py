@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
+from scipy.stats import entropy
 
 """
 WARNING: still returns lower values for Lévy walk than for Brownian motion. TODO: fix
@@ -24,7 +25,6 @@ plt.title('Levy Walk')
 plt.tight_layout()
 plt.show()
 
-from scipy.stats import entropy
 
 def diffusion_entropy(trajectory, num_bins=50):
     displacements = np.diff(trajectory)

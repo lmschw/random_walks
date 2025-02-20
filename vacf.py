@@ -6,22 +6,13 @@ from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_wa
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
 
 def velocity_autocorrelation(trajectory):
-    """
-    Compute the velocity autocorrelation function for a given trajectory.
-    trajectory: numpy array of positions at discrete time steps.
-    Returns: numpy array of the velocity autocorrelation function.
-    """
     velocities = np.diff(trajectory)
-    
     n = len(velocities)
     vacf = np.zeros(n-1)
-    
     for tau in range(1, n):
         vacf[tau-1] = np.mean(velocities[:n-tau] * velocities[tau:])
-    
     # Normalize the VACF
     vacf /= vacf[0]
-    
     return vacf
 
 STEPS = 100000

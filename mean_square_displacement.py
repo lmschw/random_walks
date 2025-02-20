@@ -5,19 +5,6 @@ from scipy.optimize import curve_fit
 from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
 
-def compute_MSD(positions, num_steps):
-   msds=[0]
-   for i in range(1, num_steps):
-       msds.append(np.sum((positions[0:-i]-positions[i::])**2)/float(num_steps-i))
-   return np.array(msds)
-
-def compute_msd(positions, num_steps):
-    msds = []
-    for t in range(num_steps):
-        diff = positions[t] - positions[0]
-        msds.append(np.linalg.norm(diff)**2)
-    return msds
-
 def msd(trajectory, DT=0.05):
     sampling_interval = int(1/DT) 
     sampled_trajectory = trajectory[::sampling_interval]  # Sample the trajectory every simulated second

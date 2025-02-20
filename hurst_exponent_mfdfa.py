@@ -22,6 +22,21 @@ def compute_hurst_exponent(trajectory, lag, q, order):
     else:
         print('Estimated H = '+'{:.3f}'.format(alpha))
         return alpha
+    
+def run_for_trajectory(trajectory):
+    lag = np.unique(np.logspace(0.5, 3, 100).astype(int))
+    # Notice these must be ints, since these will segment
+    # the data into chucks of lag size
+
+    # q = 2 signifies that we want the classical Hurst exponent
+    q = 2
+
+    order = 1 # DFA
+
+    H_x = compute_hurst_exponent(trajectory=trajectory[:,0], lag=lag, q=q, order=order)
+    H_y = compute_hurst_exponent(trajectory=trajectory[:,1], lag=lag, q=q, order=order)
+
+    print(f"H(x) = {H_x}, H(y) = {H_y}, H = {np.average([H_x, H_y])}")
 
 t_final = 2000
 delta_t = 0.001
@@ -35,19 +50,11 @@ B = 1
 steps = int(t_final / delta_t)
 print(f"STEPS: {steps}")
 #trajectory = levy_walk_simulation(steps, DIST_TYPE, A, B)
-trajectory = levy_walk(steps, A)
-#trajectory = brownian_motion_2d_without_sigma(steps)
+trajectory_l = levy_walk(steps, A)
+trajectory_b = brownian_motion_2d_without_sigma(steps)
 
-lag = np.unique(np.logspace(0.5, 3, 100).astype(int))
-# Notice these must be ints, since these will segment
-# the data into chucks of lag size
+print("Lévy walk")
+run_for_trajectory(trajectory_l)
 
-# q = 2 signifies that we want the classical Hurst exponent
-q = 2
-
-order = 1 # DFA
-
-H_x = compute_hurst_exponent(trajectory=trajectory[:,0], lag=lag, q=q, order=order)
-H_y = compute_hurst_exponent(trajectory=trajectory[:,1], lag=lag, q=q, order=order)
-
-print(f"H(x) = {H_x}, H(y) = {H_y}, H = {np.average([H_x, H_y])}")
+print("Brownian motion")
+run_for_trajectory(trajectory_b)
