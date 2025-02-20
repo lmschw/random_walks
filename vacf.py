@@ -13,10 +13,8 @@ def velocity_autocorrelation(trajectory):
     trajectory: numpy array of positions at discrete time steps.
     Returns: numpy array of the velocity autocorrelation function.
     """
-    # Compute velocities
     velocities = np.diff(trajectory)
     
-    # Compute VACF for different time lags
     n = len(velocities)
     vacf = np.zeros(n-1)
     
