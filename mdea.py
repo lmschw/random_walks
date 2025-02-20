@@ -30,10 +30,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
-from levy_walk import levy_walk_simulation
-from levy_walk_2 import levy_walk
-from levy_walk_3 import levy_walk_3
-from brownian_motion import brownian_motion_2d, brownian_motion_2d_without_sigma
+from random_walk_types.levy_walk import levy_walk_simulation
+from random_walk_types.levy_walk_2 import levy_walk
+from random_walk_types.levy_walk_3 import levy_walk_3
+from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
 
 
 def _power_log(x: float, a: float, b: float) -> float:
