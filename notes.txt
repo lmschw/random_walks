@@ -1,5 +1,0 @@
-hurst: use MFDFA, then it works fine
-MSD: works fine
-DEA: works reversed - Lévy should result in a higher entropy value
-MDEA: works
-VACF: works fine - use vacf_2
