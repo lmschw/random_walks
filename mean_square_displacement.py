@@ -2,9 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
-from random_walk_types.levy_walk import levy_walk_simulation
-from random_walk_types.levy_walk_2 import levy_walk
-from random_walk_types.levy_walk_3 import levy_walk_3
+from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
 
 def compute_MSD(positions, num_steps):
@@ -103,7 +101,7 @@ DIST_TYPE = 3
 A = 1.5         
 B = 1
 trajectory_l = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
-#trajectory_l = levy_walk_3(STEPS, A)
+#trajectory_l = levy_walk(STEPS, A)
 trajectory_b = brownian_motion_2d_without_sigma(STEPS)
 
 run_for_trajectories(trajectory_b=trajectory_b, trajectory_l=trajectory_l)

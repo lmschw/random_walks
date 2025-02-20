@@ -1,15 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from random_walk_types.levy_walk import levy_walk_simulation
-from random_walk_types.levy_walk_2 import levy_walk
-from random_walk_types.levy_walk_3 import levy_walk_3
+from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
 
 N = 1000000
 A = 1.5
 
 bm_data = brownian_motion_2d_without_sigma(N)[:,0] # just 1d
-levy_data = levy_walk_3(N, A)[:,0] # just 1d
+levy_data = levy_walk(N, A)[:,0] # just 1d
 
 # Plotting the data
 plt.figure(figsize=(10, 6))

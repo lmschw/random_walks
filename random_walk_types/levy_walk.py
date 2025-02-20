@@ -19,6 +19,50 @@ MIN_LENGTH = 1
 MAX_LENGTH = 50
 N_POINTS = 100
 
+def levy_walk(n_steps, alpha, x_range=[-50000, 50000], y_range=[-50000, 50000]):    
+    positions = np.zeros((n_steps, 2))
+
+    x, y = np.random.uniform(x_range[0], x_range[1]), np.random.uniform(y_range[0], y_range[1])
+    for j in range(n_steps):
+        # Generate step length from power-law distribution
+        step_length = np.random.pareto(alpha)
+
+        # Generate random direction
+        theta = np.random.uniform(0, 2 * np.pi)
+
+        # Update position
+        new_x = x + step_length * np.cos(theta)
+        new_y = y + step_length * np.sin(theta)
+
+        # Check boundary conditions
+        if x_range[0] <= new_x <= x_range[1] and y_range[0] <= new_y <= y_range[1]:
+            x, y = new_x, new_y
+
+        positions[j] = [x, y]
+
+    return positions
+
+def levy_walk_2(num_steps, alpha=1.5):
+    # Generate Lévy-distributed step sizes using a power-law distribution
+    # Lévy distribution has the form of p(x) ~ x^(-1-α)
+    step_sizes = np.random.standard_t(df=alpha, size=num_steps)
+    
+    # Initialize the starting position
+    x, y = 0, 0
+    positions = [(x, y)]
+    
+    for step in step_sizes:
+        # Choose a random angle for the direction (uniform distribution between 0 and 2π)
+        angle = np.random.uniform(0, 2 * np.pi)
+        
+        # Update position
+        x += step * np.cos(angle)
+        y += step * np.sin(angle)
+        
+        positions.append((x, y))
+    
+    return np.array(positions)
+
 def project_flight(r, theta):
     """
     Projects the fly lenght in the given direction
@@ -80,43 +124,3 @@ def levy_walk_simulation(N, L, A, B):
     
     return pos_track
 
-def plot_levy_simulation(pos_track):
-    """
-    Plot the trajectory and probability density distribution
-
-    """
-    if DIST_TYPE == 1:
-        pdf = "Levy-Smirnoff"
-    elif DIST_TYPE == 2:
-        pdf = "Cauchy"
-    elif DIST_TYPE == 3:
-        pdf = "Levy Scipy"
-    elif DIST_TYPE == 4:
-        pdf = "Levy Paper"
-
-    plt.figure(figsize=(12, 6))
-
-    # Trajectory
-    plt.subplot(1, 2, 1)
-    plt.plot(pos_track[:, 0], pos_track[:, 1], marker='o', linestyle='-', color='b')
-    plt.title( pdf + ' Trajectory')
-    plt.xlabel('X-axis')
-    plt.ylabel('Y-axis')
-    plt.grid(True)
-
-    # Pdf
-    plt.subplot(1, 2, 2)
-    step_sizes = np.linalg.norm(pos_track[1:] - pos_track[:-1], axis=1)  
-    plt.hist(step_sizes, bins=20, density=True, alpha=0.7, color='green', edgecolor='black')
-    plt.title('Probability Density Distribution of Step Sizes')
-    plt.xlabel('Step Size')
-    plt.ylabel('Probability Density')
-    plt.grid(True)
-
-    plt.tight_layout()
-    plt.show()
-
-
-if __name__ == "__main__":
-    trajectory = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
-    plot_levy_simulation(trajectory)
