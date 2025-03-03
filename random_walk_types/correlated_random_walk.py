@@ -24,19 +24,20 @@ def correlated_random_walk_2d(num_steps, rho=0.8, sigma=0.1):
         positions_x[i] = positions_x[i-1] + np.cos(angles_x[i])
         positions_y[i] = positions_y[i-1] + np.sin(angles_y[i])
     
-    return positions_x, positions_y
+    return np.column_stack((positions_x, positions_y))
 
-# Parameters
-num_steps = 1000
-rho = 0.8  # Correlation parameter, controls persistence
-sigma = 0.1  # Noise strength
+if __name__ == "__main__":
+    # Parameters
+    num_steps = 1000
+    rho = 0.8  # Correlation parameter, controls persistence
+    sigma = 0.1  # Noise strength
 
-# Perform 2D correlated random walk
-positions_x, positions_y = correlated_random_walk_2d(num_steps, rho, sigma)
+    # Perform 2D correlated random walk
+    positions_x, positions_y = correlated_random_walk_2d(num_steps, rho, sigma)
 
-# Plot the correlated random walk path
-plt.plot(positions_x, positions_y)
-plt.title(f'2D Correlated Random Walk with {num_steps} steps, ρ = {rho}')
-plt.xlabel('X Position')
-plt.ylabel('Y Position')
-plt.show()
+    # Plot the correlated random walk path
+    plt.plot(positions_x, positions_y)
+    plt.title(f'2D Correlated Random Walk with {num_steps} steps, ρ = {rho}')
+    plt.xlabel('X Position')
+    plt.ylabel('Y Position')
+    plt.show()

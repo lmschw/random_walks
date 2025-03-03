@@ -32,7 +32,7 @@ import seaborn as sns
 
 from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
-
+from random_walk_types.correlated_random_walk import correlated_random_walk_2d
 
 def _power_log(x: float, a: float, b: float) -> float:
     """Log power law for curve fit."""
@@ -401,6 +401,7 @@ B = 1
 #trajectory_l = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
 trajectory_l = levy_walk(STEPS, A)
 trajectory_b = brownian_motion_2d_without_sigma(STEPS)
+trajectory_c = correlated_random_walk_2d(STEPS)
 
 print("Lévy")
 dea_engine = DeaEngine(trajectory_l)
@@ -413,6 +414,16 @@ plt.show()
 
 print('Brownian')
 dea_engine = DeaEngine(trajectory_b)
+dea_engine.analyze_with_stripes(fit_start=0.1, fit_stop=0.9, n_stripes=60)
+
+dea_plot = DeaPlotter(dea_engine)
+dea_plot.s_vs_l()
+#dea_plot.mu_candidates()
+
+plt.show()
+
+print('CRW')
+dea_engine = DeaEngine(trajectory_c)
 dea_engine.analyze_with_stripes(fit_start=0.1, fit_stop=0.9, n_stripes=60)
 
 dea_plot = DeaPlotter(dea_engine)

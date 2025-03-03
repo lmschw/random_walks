@@ -4,6 +4,7 @@ from scipy.optimize import curve_fit
 
 from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
+from random_walk_types.correlated_random_walk import correlated_random_walk_2d
 
 def msd(trajectory, DT=0.05):
     sampling_interval = int(1/DT) 
@@ -22,78 +23,50 @@ def msd(trajectory, DT=0.05):
 def power_law(x, a):
     return x**a/2
 
-def run_for_trajectories(trajectory_b, trajectory_l):
-    #msds_b = compute_msd(trajectory_b, STEPS)
-    #msds_l = compute_msd(trajectory_l, STEPS)
-    msds_b = msd(trajectory_b, 1)
-    msds_l = msd(trajectory_l, 1)
+def run_for_trajectory(trajectory, name):
+    msds = msd(trajectory, 1)
+    times = np.array([i for i in range(1, len(msds)+1)])
 
-    times_b = np.array([i for i in range(1, len(msds_b)+1)])
-    times_l = np.array([i for i in range(1, len(msds_l)+1)])
+    print(f"{name}: {msds[-1]}")
 
     f, ax = plt.subplots()
-    ax.plot(times_b, msds_b, color="deepskyblue")
-    ax.scatter(times_b, msds_b, color="purple")
+    ax.plot(times, msds, color="deepskyblue")
+    ax.scatter(times, msds, color="purple")
     ax.set_xlabel('Time interval')
-    ax.set_ylabel('msd B')
+    ax.set_ylabel(f'msd {name}')
     ax.grid(True)
     plt.show()
-
-    f, ax = plt.subplots()
-    ax.plot(times_l, msds_l, color="deepskyblue")
-    ax.scatter(times_l, msds_l, color="purple")
-    ax.set_xlabel('Time interval')
-    ax.set_ylabel('msd L')
-    ax.grid(True)
-    plt.show()
-
-    print(f"B: {msds_b[-1]}, L: {msds_l[-1]}")
 
     plt.figure()
-    plt.plot(range(1, len(msds_b) + 1), msds_b, color='purple', label='MSD')
+    plt.plot(range(1, len(msds) + 1), msds, color='purple', label='MSD')
     plt.xlabel('Time interval')
     plt.xscale('log')
     plt.yscale('log')
     plt.ylabel('Mean Squared Displacement (MSD)')
-    plt.title('Mean Squared Displacement (MSD) Analysis')
+    plt.title(f'Mean Squared Displacement (MSD) Analysis {name}')
     plt.grid(True)
     plt.legend()
     plt.show()
 
-    plt.figure()
-    plt.plot(range(1, len(msds_l) + 1), msds_l, color='purple', label='MSD')
-    plt.xlabel('Time interval')
-    plt.xscale('log')
-    plt.yscale('log')
-    plt.ylabel('Mean Squared Displacement (MSD)')
-    plt.title('Mean Squared Displacement (MSD) Analysis')
-    plt.grid(True)
-    plt.legend()
-    plt.show()
-
-
-    popt, pcov = curve_fit(power_law, range(1, len(msds_b) + 1), msds_b)
+    popt, pcov = curve_fit(power_law, range(1, len(msds) + 1), msds)
     alpha = popt[0]
-    print(f"Scaling exponent (α) B: {alpha}")
-    print(f"MSD at last step B: {msds_b[-1]}")
+    print(f"Scaling exponent (α) {name}: {alpha}")
+    print(f"MSD at last step {name}: {msds[-1]}")
 
-    popt, pcov = curve_fit(power_law, range(1, len(msds_l) + 1), msds_l)
-    alpha = popt[0]
-    print(f"Scaling exponent (α) L: {alpha}")
-    print(f"MSD at last step L: {msds_l[-1]}")
-
-STEPS = 100000
+STEPS = 10000
 
 DIST_TYPE = 3
 A = 1.5         
 B = 1
-trajectory_l = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
-#trajectory_l = levy_walk(STEPS, A)
+print("Lévy")
+#trajectory_l = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
+trajectory_l = levy_walk(STEPS, A)
+run_for_trajectory(trajectory=trajectory_l, name='Lévy walk')
+
+print("Brownian")
 trajectory_b = brownian_motion_2d_without_sigma(STEPS)
+run_for_trajectory(trajectory=trajectory_b, name='Brownian motion')
 
-run_for_trajectories(trajectory_b=trajectory_b, trajectory_l=trajectory_l)
-
-# trajectory_l = levy_walk(STEPS, A)
-# trajectory_b = brownian_motion_2d(STEPS)
-
-# run_for_trajectories(trajectory_b=trajectory_b, trajectory_l=trajectory_l)
+print("CRW")
+trajectory_c = correlated_random_walk_2d(STEPS)
+run_for_trajectory(trajectory=trajectory_c, name='CRW')

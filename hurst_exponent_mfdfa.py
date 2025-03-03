@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 
 from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
+from random_walk_types.correlated_random_walk import correlated_random_walk_2d
 
 def compute_hurst_exponent(trajectory, lag, q, order):
     lag, dfa = MFDFA(trajectory, lag = lag, q = q, order = order)
@@ -39,7 +40,7 @@ def run_for_trajectory(trajectory):
     print(f"H(x) = {H_x}, H(y) = {H_y}, H = {np.average([H_x, H_y])}")
 
 t_final = 2000
-delta_t = 0.001
+delta_t = 0.01
 
 time = np.arange(0, t_final, delta_t)
 
@@ -52,9 +53,13 @@ print(f"STEPS: {steps}")
 #trajectory = levy_walk_simulation(steps, DIST_TYPE, A, B)
 trajectory_l = levy_walk(steps, A)
 trajectory_b = brownian_motion_2d_without_sigma(steps)
+trajectory_c = correlated_random_walk_2d(steps)
 
 print("Lévy walk")
 run_for_trajectory(trajectory_l)
 
 print("Brownian motion")
 run_for_trajectory(trajectory_b)
+
+print("CRW")
+run_for_trajectory(trajectory_c)

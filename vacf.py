@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
+from random_walk_types.correlated_random_walk import correlated_random_walk_2d
 
 def velocity_autocorrelation(trajectory):
     velocities = np.diff(trajectory)
@@ -23,7 +24,7 @@ B = 1
 #trajectory_l = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
 trajectory_l = levy_walk(STEPS, A)
 trajectory_b = brownian_motion_2d_without_sigma(STEPS)
-
+trajectory_c = correlated_random_walk_2d(STEPS)
 
 # Compute the VACF
 vacf = velocity_autocorrelation(trajectory_b)
@@ -46,5 +47,17 @@ plt.plot(np.arange(1, len(vacf) + 1), vacf)
 plt.xlabel('Time Lag (τ)', fontsize=14)
 plt.ylabel('VACF (C_v(τ))', fontsize=14)
 plt.title('Velocity Autocorrelation Function (VACF) - Lévy walk', fontsize=16)
+plt.grid(True)
+plt.show()
+
+# Compute the VACF
+vacf = velocity_autocorrelation(trajectory_c)
+
+# Plot the VACF
+plt.figure(figsize=(8, 6))
+plt.plot(np.arange(1, len(vacf) + 1), vacf)
+plt.xlabel('Time Lag (τ)', fontsize=14)
+plt.ylabel('VACF (C_v(τ))', fontsize=14)
+plt.title('Velocity Autocorrelation Function (VACF) - CRW', fontsize=16)
 plt.grid(True)
 plt.show()
