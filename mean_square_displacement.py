@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
+import pickle
 
 from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
@@ -29,6 +30,7 @@ def run_for_trajectory(trajectory, name):
 
     print(f"{name}: {msds[-1]}")
 
+    """
     f, ax = plt.subplots()
     ax.plot(times, msds, color="deepskyblue")
     ax.scatter(times, msds, color="purple")
@@ -47,26 +49,47 @@ def run_for_trajectory(trajectory, name):
     plt.grid(True)
     plt.legend()
     plt.show()
-
+    """
     popt, pcov = curve_fit(power_law, range(1, len(msds) + 1), msds)
     alpha = popt[0]
     print(f"Scaling exponent (α) {name}: {alpha}")
     print(f"MSD at last step {name}: {msds[-1]}")
-
+    return msds[-1], alpha
 STEPS = 10000
 
 DIST_TYPE = 3
 A = 1.5         
 B = 1
-print("Lévy")
-#trajectory_l = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
-trajectory_l = levy_walk(STEPS, A)
-run_for_trajectory(trajectory=trajectory_l, name='Lévy walk')
+# print("Lévy")
+# #trajectory_l = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
+# trajectory_l = levy_walk(STEPS, A)
+# run_for_trajectory(trajectory=trajectory_l, name='Lévy walk')
 
-print("Brownian")
-trajectory_b = brownian_motion_2d_without_sigma(STEPS)
-run_for_trajectory(trajectory=trajectory_b, name='Brownian motion')
+# print("Brownian")
+# trajectory_b = brownian_motion_2d_without_sigma(STEPS)
+# run_for_trajectory(trajectory=trajectory_b, name='Brownian motion')
 
-print("CRW")
-trajectory_c = correlated_random_walk_2d(STEPS)
-run_for_trajectory(trajectory=trajectory_c, name='CRW')
+# print("CRW")
+# trajectory_c = correlated_random_walk_2d(STEPS)
+# run_for_trajectory(trajectory=trajectory_c, name='CRW')
+
+print("test")
+msds = []
+alphas = []
+for rw in ["brown"]:
+    for filename in ["d:/results/2D/2025-06-04_13-55-44/new_", "d:/results/2D/2025-06-04_13-56-23/"]:
+        for i in range(1,6):
+            print(filename, i)
+            #file = open(f"c:/Users/Lilly/dev/mas-random-walk/mas_random_walk/results/2D/2025-05-16_10-46-45/new_{rw}_free_25_run{i}.pickle",'rb')
+            #file = open(f"{rw}_free_100_run{i}.pickle",'rb')
+            file = open(f"{filename}{rw}_free_100_run{i}.pickle",'rb')
+            object_file = pickle.load(file)
+            trajectory = np.array(object_file["trajectory"])
+            msd_val, alpha = run_for_trajectory(trajectory=trajectory, name=f'Brownian - {i}')
+            msds.append(msd_val)
+            alphas.append(alpha)
+        print(rw)
+        print(f"alphas: {alphas}")
+        print(f"avg alphas: {np.average(alphas)}, min alpha: {np.min(alphas)}, max alpha: {np.max(alphas)}, std: {np.std(alphas)}")
+        print(f"msds: {msds}")
+        print(f"avg msds: {np.average(msds)}, min alpha: {np.min(msds)}, max alpha: {np.max(msds)}, std: {np.std(msds)}")

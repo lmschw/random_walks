@@ -29,6 +29,7 @@ from typing import Self
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
+import pickle
 
 from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
@@ -232,7 +233,7 @@ class DeaEngine:
         self._calculate_entropy()
         self._calculate_scaling()
         self._calculate_mu()
-        self.print_result()
+        #self.print_result()
 
     def analyze_without_stripes(
         self: Self,
@@ -399,35 +400,68 @@ DIST_TYPE = 3
 A = 1.5         
 B = 1
 #trajectory_l = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
-trajectory_l = levy_walk(STEPS, A)
-trajectory_b = brownian_motion_2d_without_sigma(STEPS)
-trajectory_c = correlated_random_walk_2d(STEPS)
+# trajectory_l = levy_walk(STEPS, A)
+# trajectory_b = brownian_motion_2d_without_sigma(STEPS)
+# trajectory_c = correlated_random_walk_2d(STEPS)
 
-print("Lévy")
-dea_engine = DeaEngine(trajectory_l)
-dea_engine.analyze_with_stripes(fit_start=0.1, fit_stop=0.9, n_stripes=60)
+# print("Lévy")
+# dea_engine = DeaEngine(trajectory_l)
+# dea_engine.analyze_with_stripes(fit_start=0.1, fit_stop=0.9, n_stripes=60)
 
-dea_plot = DeaPlotter(dea_engine)
-dea_plot.s_vs_l()
-#dea_plot.mu_candidates()
-plt.show()
+# dea_plot = DeaPlotter(dea_engine)
+# dea_plot.s_vs_l()
+# #dea_plot.mu_candidates()
+# plt.show()
 
-print('Brownian')
-dea_engine = DeaEngine(trajectory_b)
-dea_engine.analyze_with_stripes(fit_start=0.1, fit_stop=0.9, n_stripes=60)
+# print('Brownian')
+# dea_engine = DeaEngine(trajectory_b)
+# dea_engine.analyze_with_stripes(fit_start=0.1, fit_stop=0.9, n_stripes=60)
 
-dea_plot = DeaPlotter(dea_engine)
-dea_plot.s_vs_l()
-#dea_plot.mu_candidates()
+# dea_plot = DeaPlotter(dea_engine)
+# dea_plot.s_vs_l()
+# #dea_plot.mu_candidates()
 
-plt.show()
+# plt.show()
 
-print('CRW')
-dea_engine = DeaEngine(trajectory_c)
-dea_engine.analyze_with_stripes(fit_start=0.1, fit_stop=0.9, n_stripes=60)
+# print('CRW')
+# dea_engine = DeaEngine(trajectory_c)
+# dea_engine.analyze_with_stripes(fit_start=0.1, fit_stop=0.9, n_stripes=60)
 
-dea_plot = DeaPlotter(dea_engine)
-dea_plot.s_vs_l()
-#dea_plot.mu_candidates()
+# dea_plot = DeaPlotter(dea_engine)
+# dea_plot.s_vs_l()
+# #dea_plot.mu_candidates()
 
-plt.show()
+# plt.show()
+
+print('test')
+
+deltas = []
+mu1s = []
+mu2s = []
+for rw in ["brown"]:
+    for i in range(1,3):
+        #file = open(f"d:/results/2D/2025-06-04_13-55-44/new_{rw}_free_100_run{i}.pickle",'rb')
+        file = open(f"d:/results/2D/2025-06-04_13-56-23/{rw}_free_100_run{i}.pickle",'rb')
+
+        object_file = pickle.load(file)
+        trajectory = np.array(object_file["trajectory"])
+        dea_engine = DeaEngine(trajectory)
+        dea_engine.analyze_with_stripes(fit_start=0.1, fit_stop=0.9, n_stripes=60)
+
+        deltas.append(dea_engine.delta)
+        mu1s.append(dea_engine.mu1)
+        mu2s.append(dea_engine.mu2)
+
+        # dea_plot = DeaPlotter(dea_engine)
+        # dea_plot.s_vs_l()
+        #dea_plot.mu_candidates()
+
+        #plt.show()
+    print(rw)
+    # print(f"deltas: {deltas}")
+    # print(f"mu1s: {mu1s}")
+    # print(f"mu2s: {mu2s}")
+    print(f"avg delta: {np.average(deltas)}, min delta: {np.min(deltas)}, max delta: {np.max(deltas)}, std: {np.std(deltas)}")
+    print(f"avg mu1: {np.average(mu1s)}, min mu1: {np.min(mu1s)}, max mu1: {np.max(mu1s)}, std: {np.std(mu1s)}")
+    print(f"avg mu2: {np.average(mu2s)}, min mu2: {np.min(mu2s)}, max mu2: {np.max(mu2s)}, std: {np.std(mu2s)}")
+
