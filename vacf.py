@@ -16,48 +16,49 @@ def velocity_autocorrelation(trajectory):
     vacf /= vacf[0]
     return vacf
 
-STEPS = 100000
+if __name__ == "__main__":
+    STEPS = 100000
 
-DIST_TYPE = 3
-A = 1.5         
-B = 1
-#trajectory_l = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
-trajectory_l = levy_walk(STEPS, A)
-trajectory_b = brownian_motion_2d_without_sigma(STEPS)
-trajectory_c = correlated_random_walk_2d(STEPS)
+    DIST_TYPE = 3
+    A = 1.5         
+    B = 1
+    #trajectory_l = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
+    trajectory_l = levy_walk(STEPS, A)
+    trajectory_b = brownian_motion_2d_without_sigma(STEPS)
+    trajectory_c = correlated_random_walk_2d(STEPS)
 
-# Compute the VACF
-vacf = velocity_autocorrelation(trajectory_b)
+    # Compute the VACF
+    vacf = velocity_autocorrelation(trajectory_b)
 
-# Plot the VACF
-plt.figure(figsize=(8, 6))
-plt.plot(np.arange(1, len(vacf) + 1), vacf)
-plt.xlabel('Time Lag (τ)', fontsize=14)
-plt.ylabel('VACF (C_v(τ))', fontsize=14)
-plt.title('Velocity Autocorrelation Function (VACF) - Brownian motion', fontsize=16)
-plt.grid(True)
-plt.show()
+    # Plot the VACF
+    plt.figure(figsize=(8, 6))
+    plt.plot(np.arange(1, len(vacf) + 1), vacf)
+    plt.xlabel('Time Lag (τ)', fontsize=14)
+    plt.ylabel('VACF (C_v(τ))', fontsize=14)
+    plt.title('Velocity Autocorrelation Function (VACF) - Brownian motion', fontsize=16)
+    plt.grid(True)
+    plt.show()
 
-# Compute the VACF
-vacf = velocity_autocorrelation(trajectory_l)
+    # Compute the VACF
+    vacf = velocity_autocorrelation(trajectory_l)
 
-# Plot the VACF
-plt.figure(figsize=(8, 6))
-plt.plot(np.arange(1, len(vacf) + 1), vacf)
-plt.xlabel('Time Lag (τ)', fontsize=14)
-plt.ylabel('VACF (C_v(τ))', fontsize=14)
-plt.title('Velocity Autocorrelation Function (VACF) - Lévy walk', fontsize=16)
-plt.grid(True)
-plt.show()
+    # Plot the VACF
+    plt.figure(figsize=(8, 6))
+    plt.plot(np.arange(1, len(vacf) + 1), vacf)
+    plt.xlabel('Time Lag (τ)', fontsize=14)
+    plt.ylabel('VACF (C_v(τ))', fontsize=14)
+    plt.title('Velocity Autocorrelation Function (VACF) - Lévy walk', fontsize=16)
+    plt.grid(True)
+    plt.show()
 
-# Compute the VACF
-vacf = velocity_autocorrelation(trajectory_c)
+    # Compute the VACF
+    vacf = velocity_autocorrelation(trajectory_c)
 
-# Plot the VACF
-plt.figure(figsize=(8, 6))
-plt.plot(np.arange(1, len(vacf) + 1), vacf)
-plt.xlabel('Time Lag (τ)', fontsize=14)
-plt.ylabel('VACF (C_v(τ))', fontsize=14)
-plt.title('Velocity Autocorrelation Function (VACF) - CRW', fontsize=16)
-plt.grid(True)
-plt.show()
+    # Plot the VACF
+    plt.figure(figsize=(8, 6))
+    plt.plot(np.arange(1, len(vacf) + 1), vacf)
+    plt.xlabel('Time Lag (τ)', fontsize=14)
+    plt.ylabel('VACF (C_v(τ))', fontsize=14)
+    plt.title('Velocity Autocorrelation Function (VACF) - CRW', fontsize=16)
+    plt.grid(True)
+    plt.show()
