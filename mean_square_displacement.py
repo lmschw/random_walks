@@ -53,20 +53,22 @@ def run_for_trajectory(trajectory, name):
     print(f"Scaling exponent (α) {name}: {alpha}")
     print(f"MSD at last step {name}: {msds[-1]}")
 
-STEPS = 10000
 
-DIST_TYPE = 3
-A = 1.5         
-B = 1
-print("Lévy")
-#trajectory_l = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
-trajectory_l = levy_walk(STEPS, A)
-run_for_trajectory(trajectory=trajectory_l, name='Lévy walk')
+if __name__ == "__main__":
+    STEPS = 10000
 
-print("Brownian")
-trajectory_b = brownian_motion_2d_without_sigma(STEPS)
-run_for_trajectory(trajectory=trajectory_b, name='Brownian motion')
+    DIST_TYPE = 3
+    A = 1.5         
+    B = 1
+    print("Lévy")
+    #trajectory_l = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
+    trajectory_l = levy_walk(STEPS, A)
+    run_for_trajectory(trajectory=trajectory_l, name='Lévy walk')
 
-print("CRW")
-trajectory_c = correlated_random_walk_2d(STEPS)
-run_for_trajectory(trajectory=trajectory_c, name='CRW')
+    print("Brownian")
+    trajectory_b = brownian_motion_2d_without_sigma(STEPS)
+    run_for_trajectory(trajectory=trajectory_b, name='Brownian motion')
+
+    print("CRW")
+    trajectory_c = correlated_random_walk_2d(STEPS)
+    run_for_trajectory(trajectory=trajectory_c, name='CRW')
