@@ -13,6 +13,7 @@ dimension = "2D"
 implementation_types = ["old", "new"]
 
 basepath = "J:/leader_emergence/results/2D/res/"
+save_location = "vacf_results/"
 
 for num_agents in num_agents_options:
     for sample_type in sample_types:
@@ -40,9 +41,9 @@ for num_agents in num_agents_options:
                         plt.ylabel('VACF (C_v(τ))', fontsize=14)
                         plt.title(f'Velocity Autocorrelation Function (VACF) - {num_agents} agents, {sample_type}, {leader_type}, {implementation_type}, run={run}', fontsize=16)
                         plt.grid(True)
-                        plt.savefig(f"{filename}.svg")
-                        plt.savefig(f"{filename}.png")
-                        plt.savefig(f"{filename}.pdf")
+                        plt.savefig(f"{save_location}{filename}.svg")
+                        plt.savefig(f"{save_location}{filename}.png")
+                        plt.savefig(f"{save_location}{filename}.pdf")
                 filename = f"{impl_prefix}{sample_type}_{leader_type}_{num_agents**2}"
                 results_arr = np.array(results)
                 plt.figure(figsize=(8, 6))
@@ -51,9 +52,9 @@ for num_agents in num_agents_options:
                 plt.ylabel('VACF (C_v(τ))', fontsize=14)
                 plt.title(f'Velocity Autocorrelation Function (VACF) - {num_agents} agents, {sample_type}, {leader_type}, {implementation_type}', fontsize=16)
                 plt.grid(True)
-                plt.savefig(f"{filename}.svg")
-                plt.savefig(f"{filename}.png")
-                plt.savefig(f"{filename}.pdf")
+                plt.savefig(f"{save_location}{filename}.svg")
+                plt.savefig(f"{save_location}{filename}.png")
+                plt.savefig(f"{save_location}{filename}.pdf")
                 comp_results.append(np.average(results_arr.T, axis=1))
             filename = f"comp_{sample_type}_{leader_type}_{num_agents**2}"
             plt.figure(figsize=(8, 6))
@@ -62,6 +63,6 @@ for num_agents in num_agents_options:
             plt.ylabel('VACF (C_v(τ))', fontsize=14)
             plt.title(f'Velocity Autocorrelation Function (VACF) - {num_agents} agents, {sample_type}, {leader_type}', fontsize=16)
             plt.grid(True)
-            plt.savefig(f"{filename}.svg")
-            plt.savefig(f"{filename}.png")
-            plt.savefig(f"{filename}.pdf")
+            plt.savefig(f"{save_location}{filename}.svg")
+            plt.savefig(f"{save_location}{filename}.png")
+            plt.savefig(f"{save_location}{filename}.pdf")
