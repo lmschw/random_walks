@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
-import pickle
 
+import data_loader
 from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
 from random_walk_types.correlated_random_walk import correlated_random_walk_2d
@@ -30,7 +30,6 @@ def run_for_trajectory(trajectory, name):
 
     print(f"{name}: {msds[-1]}")
 
-    """
     f, ax = plt.subplots()
     ax.plot(times, msds, color="deepskyblue")
     ax.scatter(times, msds, color="purple")
@@ -49,28 +48,17 @@ def run_for_trajectory(trajectory, name):
     plt.grid(True)
     plt.legend()
     plt.show()
-    """
+
     popt, pcov = curve_fit(power_law, range(1, len(msds) + 1), msds)
     alpha = popt[0]
     print(f"Scaling exponent (α) {name}: {alpha}")
     print(f"MSD at last step {name}: {msds[-1]}")
-    return msds[-1], alpha
 
-if __name__ == "__main__":
-    STEPS = 10000
 
-    DIST_TYPE = 3
-    A = 1.5         
-    B = 1
-    print("Lévy")
-    #trajectory_l = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
-    trajectory_l = levy_walk(STEPS, A)
-    run_for_trajectory(trajectory=trajectory_l, name='Lévy walk')
 
-    print("Brownian")
-    trajectory_b = brownian_motion_2d_without_sigma(STEPS)
-    run_for_trajectory(trajectory=trajectory_b, name='Brownian motion')
-
-    print("CRW")
-    trajectory_c = correlated_random_walk_2d(STEPS)
-    run_for_trajectory(trajectory=trajectory_c, name='CRW')
+for n in [1, 25, 49, 100]:
+    for type in ['brown']:
+        for i in range(1,4):
+            filename = f"{type}_free_{n}_run{i}"
+            trajectory = data_loader.load_data(f"c:/Users/lschw/dev/mas-random-walk/mas_random_walk/results/2D/2025-03-20_11-21-14/{filename}.pickle")
+            run_for_trajectory(trajectory=trajectory, name=f'{type} - {n} - {i}')
