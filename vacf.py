@@ -7,15 +7,15 @@ from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_wa
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
 from random_walk_types.correlated_random_walk import correlated_random_walk_2d
 
-def velocity_autocorrelation(trajectory, windows=[1, 2, 3, 4]):
-    velocities = calculate_velocity(positions=trajectory)
-    vals = []
-    for window in windows:
-        window_vals = []
-        for t in range(0, len(trajectory-window), window):
-            window_vals.append(np.sum(velocities[t] * velocities[t+window], axis=1))
-        vals.append(np.average(np.sum(window_vals)))
-    return vals
+def velocity_autocorrelation(trajectory):
+    velocities = np.diff(trajectory)
+    n = len(velocities)
+    vacf = np.zeros(n-1)
+    for tau in range(1, n):
+        vacf[tau-1] = np.mean(velocities[:n-tau] * velocities[tau:])
+    # Normalize the VACF
+    vacf /= vacf[0]
+    return vacf
 
 
 def calculate_velocity(positions):
