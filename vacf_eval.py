@@ -27,6 +27,7 @@ for num_agents in num_agents_options:
                 results = []
                 for run in range(num_runs):
                     filename = f"{impl_prefix}{sample_type}_{leader_type}_{num_agents**2}_run{run + 1}"
+                    print(filename)
                     filepath = f"{basepath}{filename}.pickle"
                     with open(filepath, "rb") as input_file:
                         trajectory = pickle.load(input_file)["trajectory"]
@@ -58,7 +59,10 @@ for num_agents in num_agents_options:
                 comp_results.append(np.average(results_arr.T, axis=1))
             filename = f"comp_{sample_type}_{leader_type}_{num_agents**2}"
             plt.figure(figsize=(8, 6))
-            plt.plot(np.arange(1, len(results[0]) + 1), comp_results)
+            plt.plot(np.arange(1, len(results[0]) + 1), results[0])
+            plt.plot(np.arange(1, len(results[0]) + 1), results[1])
+            plt.legend(implementation_types, fontsize=12)
+
             plt.xlabel('Time Lag (τ)', fontsize=14)
             plt.ylabel('VACF (C_v(τ))', fontsize=14)
             plt.title(f'Velocity Autocorrelation Function (VACF) - {num_agents} agents, {sample_type}, {leader_type}', fontsize=16)
