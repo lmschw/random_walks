@@ -75,7 +75,7 @@ for num_agents in num_agents_options:
                 plot_results(result=results, name=f"{num_agents} agents, {sample_type}, {leader_type}, {implementation_type}", save_location=save_location, save_path=filename)
                 print(f"average msd last timestep: {filename}: {results[-1]}")
 
-                comp_results.append(np.average(results.T, axis=1))
+                comp_results.append(results)
             filename = f"comp_{sample_type}_{leader_type}_{num_agents**2}"
             plot_results(result=comp_results, name=f"{num_agents} agents, {sample_type}, {leader_type}", save_location=save_location, save_path=filename)
             print(f"average msd last timestep total: {filename}: old: {comp_results[0][-1]} - new: {comp_results[1][-1]}")
