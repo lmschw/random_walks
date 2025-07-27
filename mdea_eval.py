@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import pickle
 import numpy as np
+import pandas as pd
 
 import mdea 
 
@@ -15,6 +16,7 @@ implementation_types = ["old", "new"]
 basepath = "J:/leader_emergence/results/2D/res/"
 save_location = "mdea_results/"
 
+data = []
 for num_agents in num_agents_options:
     for sample_type in sample_types:
         for leader_type in leader_types:
@@ -29,6 +31,7 @@ for num_agents in num_agents_options:
                 deltas = []
                 mu1s = []
                 mu2s = []
+                
                 for run in range(num_runs):
                     filename = f"{impl_prefix}{sample_type}_{leader_type}_{num_agents**2}_run{run + 1}"
                     print(filename)
@@ -42,13 +45,15 @@ for num_agents in num_agents_options:
                         deltas.append(dea_engine.delta)
                         mu1s.append(dea_engine.mu1)
                         mu2s.append(dea_engine.mu2)
+                        data.append([sample_type, leader_type, num_agents, implementation_type, run, dea_engine.delta, dea_engine.mu1, dea_engine.mu2])
 
-                        print(f"{filename}: delta: {dea_engine.delta}, mu1: {dea_engine.mu1}, mu2: {dea_engine.mu2}")
+                        #print(f"{filename}: delta: {dea_engine.delta}, mu1: {dea_engine.mu1}, mu2: {dea_engine.mu2}")
                 filename = f"{impl_prefix}{sample_type}_{leader_type}_{num_agents**2}"
+                
 
-                print(f"{filename}: avg delta: {np.average(deltas)}, min delta: {np.min(deltas)}, max delta: {np.max(deltas)}, std: {np.std(deltas)}")
-                print(f"{filename}: avg mu1: {np.average(mu1s)}, min mu1: {np.min(mu1s)}, max mu1: {np.max(mu1s)}, std: {np.std(mu1s)}")
-                print(f"{filename}: avg mu2: {np.average(mu2s)}, min mu2: {np.min(mu2s)}, max mu2: {np.max(mu2s)}, std: {np.std(mu2s)}")
+                # print(f"{filename}: avg delta: {np.average(deltas)}, min delta: {np.min(deltas)}, max delta: {np.max(deltas)}, std: {np.std(deltas)}")
+                # print(f"{filename}: avg mu1: {np.average(mu1s)}, min mu1: {np.min(mu1s)}, max mu1: {np.max(mu1s)}, std: {np.std(mu1s)}")
+                # print(f"{filename}: avg mu2: {np.average(mu2s)}, min mu2: {np.min(mu2s)}, max mu2: {np.max(mu2s)}, std: {np.std(mu2s)}")
 
                 comp_deltas.append(np.average(deltas))
                 comp_mu1s.append(np.average(mu1s)) 
@@ -58,4 +63,7 @@ for num_agents in num_agents_options:
             print(f"{filename}: avg mu1: {np.average(comp_mu1s)}, min mu1: {np.min(comp_mu1s)}, max mu1: {np.max(comp_mu1s)}, std: {np.std(comp_mu1s)}")
             print(f"{filename}: avg mu2: {np.average(comp_mu2s)}, min mu2: {np.min(comp_mu2s)}, max mu2: {np.max(comp_mu2s)}, std: {np.std(comp_mu2s)}")
 
+
+df = pd.DataFrame(data, columns=["sample_type", "leader_type", "num_agents", "implementation_type", "run", "delta", "mu1", "mu2"])
+df.to_csv(f"{save_location}mdea_results.csv", index=False)
 
