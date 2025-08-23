@@ -1,6 +1,7 @@
 import os
 import pickle
 import numpy as np
+import pandas as pd
 
 def calculate_angles(positions):
     """Calculate angles from positions."""
@@ -22,14 +23,20 @@ def load_all_data_in_directory(directory_path, random_walk_type):
             trajectories.append(trajectory)
     return trajectories
 
-def load_data(file_path):
+def load_pickle_data(file_path):
     """ Load a pickle file and return an array of angles from the trajectory."""
     with open(file_path, 'rb') as f:
         loaded_data = pickle.load(f)
     return np.array(loaded_data["trajectory"])
 
+def load_csv_data(file_path, headers):
+    """ Load a CSV file and return an array of angles from the trajectory."""
+    data = pd.read_csv(file_path)
+    df = pd.DataFrame(data, columns=headers)
+    return df
+
 def main():
     """ Main function to load data and process it."""
     curr_dir = os.path.dirname(__file__)
     exp_results_dir = os.path.join(curr_dir, 'brown_free_25')
-    load_data(exp_results_dir)
+    load_pickle_data(exp_results_dir)
