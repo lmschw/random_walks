@@ -18,10 +18,10 @@ def compute_hurst_exponent(trajectory, lag, q, order):
     alpha = H_hat[0]
 
     if alpha >= 1:
-        print('Estimated H = '+'{:.3f}'.format(alpha-1))
+        #print('Estimated H = '+'{:.3f}'.format(alpha-1))
         return alpha-1
     else:
-        print('Estimated H = '+'{:.3f}'.format(alpha))
+        #print('Estimated H = '+'{:.3f}'.format(alpha))
         return alpha
     
 def run_for_trajectory(trajectory):
