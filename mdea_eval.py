@@ -2,7 +2,7 @@ import pickle
 import numpy as np
 import pandas as pd
 
-import mdea 
+import metrics.mdea as mdea 
 
 """
 Evaluates the Hurst exponent using the MDEA method on various random walk trajectories.

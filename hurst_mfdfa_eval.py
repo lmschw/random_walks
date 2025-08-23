@@ -2,7 +2,7 @@ import pickle
 import numpy as np
 import pandas as pd
 
-import hurst_exponent_mfdfa as mdfdfa 
+import metrics.hurst_exponent_mfdfa as mdfdfa 
 
 """
 Evaluates the Hurst exponent using the MF-DFA method on various random walk trajectories.

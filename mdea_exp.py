@@ -29,7 +29,7 @@ import seaborn as sns
 from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
 from random_walk_types.correlated_random_walk import correlated_random_walk_2d
-import data_loader
+import utils.data_loader as data_loader
 
 def _power_log(x: float, a: float, b: float) -> float:
     """Log power law for curve fit."""

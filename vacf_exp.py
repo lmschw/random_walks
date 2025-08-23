@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-import data_loader
+import utils.data_loader as data_loader
 
 def velocity_autocorrelation(trajectory):
     velocities = np.diff(trajectory)

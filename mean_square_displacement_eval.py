@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 import pandas as pd
 
-import mean_square_displacement as msd
+import metrics.mean_square_displacement as msd
 
 """
 Evaluates the Mean Squared Displacement (MSD) on various random walk trajectories.

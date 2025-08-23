@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
-import data_loader
+import utils.data_loader as data_loader
 
 def msd(trajectory, DT=0.05):
     sampling_interval = int(1/DT) 

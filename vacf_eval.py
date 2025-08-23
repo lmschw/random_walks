@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import pickle
 import numpy as np
 
-import vacf 
+import metrics.vacf as vacf 
 
 """
 Evaluate the velocity autocorrelation function (VACF) for different random walk types and implementations.
