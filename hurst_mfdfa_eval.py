@@ -37,7 +37,7 @@ for num_agents in num_agents_options:
                     print(filename)
                     filepath = f"{basepath}{filename}.pickle"
                     with open(filepath, "rb") as input_file:
-                        trajectory = pickle.load(input_file)["trajectory"]
+                        trajectory = np.array(pickle.load(input_file)["trajectory"])
 
                         hx, hy, h = mdfdfa.run_for_trajectory(trajectory)
 
