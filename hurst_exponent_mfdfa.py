@@ -38,6 +38,7 @@ def run_for_trajectory(trajectory):
     H_y = compute_hurst_exponent(trajectory=trajectory[:,1], lag=lag, q=q, order=order)
 
     print(f"H(x) = {H_x}, H(y) = {H_y}, H = {np.average([H_x, H_y])}")
+    return H_x, H_y, np.average([H_x, H_y])
 
 t_final = 2000
 delta_t = 0.01
