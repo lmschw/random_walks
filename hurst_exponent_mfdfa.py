@@ -40,27 +40,28 @@ def run_for_trajectory(trajectory):
     print(f"H(x) = {H_x}, H(y) = {H_y}, H = {np.average([H_x, H_y])}")
     return H_x, H_y, np.average([H_x, H_y])
 
-t_final = 2000
-delta_t = 0.01
+if __name__ == "__main__":
+    t_final = 2000
+    delta_t = 0.01
 
-time = np.arange(0, t_final, delta_t)
+    time = np.arange(0, t_final, delta_t)
 
-# Distribution 
-DIST_TYPE = 3
-A = 2        
-B = 1
-steps = int(t_final / delta_t)
-print(f"STEPS: {steps}")
-#trajectory = levy_walk_simulation(steps, DIST_TYPE, A, B)
-trajectory_l = levy_walk(steps, A)
-trajectory_b = brownian_motion_2d_without_sigma(steps)
-trajectory_c = correlated_random_walk_2d(steps)
+    # Distribution 
+    DIST_TYPE = 3
+    A = 2        
+    B = 1
+    steps = int(t_final / delta_t)
+    print(f"STEPS: {steps}")
+    #trajectory = levy_walk_simulation(steps, DIST_TYPE, A, B)
+    trajectory_l = levy_walk(steps, A)
+    trajectory_b = brownian_motion_2d_without_sigma(steps)
+    trajectory_c = correlated_random_walk_2d(steps)
 
-print("Lévy walk")
-run_for_trajectory(trajectory_l)
+    print("Lévy walk")
+    run_for_trajectory(trajectory_l)
 
-print("Brownian motion")
-run_for_trajectory(trajectory_b)
+    print("Brownian motion")
+    run_for_trajectory(trajectory_b)
 
-print("CRW")
-run_for_trajectory(trajectory_c)
+    print("CRW")
+    run_for_trajectory(trajectory_c)
