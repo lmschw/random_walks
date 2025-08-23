@@ -4,6 +4,11 @@ import numpy as np
 
 import vacf 
 
+"""
+Evaluate the velocity autocorrelation function (VACF) for different random walk types and implementations.
+Saves plots of the VACF for each run and averaged results.
+"""
+
 sample_types = ["brown", "levy", "correlated"]
 leader_types = ["free"]
 num_agents_options = [1, 5, 7, 10]

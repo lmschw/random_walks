@@ -1,13 +1,12 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
-import pickle
 
-from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
+from random_walk_types.levy_walk import levy_walk
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
 from random_walk_types.correlated_random_walk import correlated_random_walk_2d
 
 def msd(trajectory, DT=0.05):
+    """ Calculate the Mean Squared Displacement (MSD) of a 2D trajectory. """
     sampling_interval = int(1/DT) 
     sampled_trajectory = trajectory[::sampling_interval]  # Sample the trajectory every simulated second
     # print(sampled_trajectory)
@@ -25,31 +24,11 @@ def power_law(x, a):
     return x**a/2
 
 def run_for_trajectory(trajectory, name):
+    """ Run the MSD calculation for a given 2D trajectory. """
     msds = msd(trajectory, 1)
-    times = np.array([i for i in range(1, len(msds)+1)])
 
     print(f"{name}: {msds[-1]}")
 
-    """
-    f, ax = plt.subplots()
-    ax.plot(times, msds, color="deepskyblue")
-    ax.scatter(times, msds, color="purple")
-    ax.set_xlabel('Time interval')
-    ax.set_ylabel(f'msd {name}')
-    ax.grid(True)
-    plt.show()
-
-    plt.figure()
-    plt.plot(range(1, len(msds) + 1), msds, color='purple', label='MSD')
-    plt.xlabel('Time interval')
-    plt.xscale('log')
-    plt.yscale('log')
-    plt.ylabel('Mean Squared Displacement (MSD)')
-    plt.title(f'Mean Squared Displacement (MSD) Analysis {name}')
-    plt.grid(True)
-    plt.legend()
-    plt.show()
-    """
     popt, pcov = curve_fit(power_law, range(1, len(msds) + 1), msds)
     alpha = popt[0]
     print(f"Scaling exponent (α) {name}: {alpha}")
@@ -57,6 +36,8 @@ def run_for_trajectory(trajectory, name):
     return msds[-1], alpha
 
 if __name__ == "__main__":
+    """ Main function to run the MSD calculation on the test implementations of
+        different types of random walks. """
     STEPS = 10000
 
     DIST_TYPE = 3

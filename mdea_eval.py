@@ -1,9 +1,13 @@
-import matplotlib.pyplot as plt
 import pickle
 import numpy as np
 import pandas as pd
 
 import mdea 
+
+"""
+Evaluates the Hurst exponent using the MDEA method on various random walk trajectories.
+Saves the results to a CSV file.
+"""
 
 sample_types = ["brown", "levy", "correlated"]
 leader_types = ["free"]

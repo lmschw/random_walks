@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
+from random_walk_types.levy_walk import levy_walk
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
 from random_walk_types.correlated_random_walk import correlated_random_walk_2d
 from scipy.stats import entropy

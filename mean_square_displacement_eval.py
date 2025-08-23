@@ -1,8 +1,14 @@
 import matplotlib.pyplot as plt
 import pickle
 import numpy as np
+import pandas as pd
 
 import mean_square_displacement as msd
+
+"""
+Evaluates the Mean Squared Displacement (MSD) on various random walk trajectories.
+Saves the result plots.
+"""
 
 def plot_results(result, name, save_location, save_path):
     times = np.array([i for i in range(1, len(result)+1)])
@@ -36,17 +42,20 @@ def plot_results(result, name, save_location, save_path):
     alpha = popt[0]
     print(f"Scaling exponent (α) {name}: {alpha}")
     print(f"MSD at last step {name}: {result[-1]}")
+    return result[-1], alpha
 
 sample_types = ["brown", "levy", "correlated"]
 leader_types = ["free"]
 num_agents_options = [1, 5, 7, 10]
 steps_per_run = 25000
-num_runs = 2
+num_runs = 30
 dimension = "2D"
 implementation_types = ["old", "new"]
 
 basepath = "J:/leader_emergence/results/2D/res/"
 save_location = "msd_results/"
+
+data = []
 
 for num_agents in num_agents_options:
     for sample_type in sample_types:
@@ -66,8 +75,9 @@ for num_agents in num_agents_options:
 
                         result = msd.msd(trajectory,1)
                         results.append(result)
-                        plot_results(result=result, name=f"{num_agents} agents, {sample_type}, {leader_type}, {implementation_type}, run={run}", save_location=save_location, save_path=filename)
+                        last_step_result, alpha = plot_results(result=result, name=f"{num_agents} agents, {sample_type}, {leader_type}, {implementation_type}, run={run}", save_location=save_location, save_path=filename)
                         print(f"msd last timestep: {filename}: {result[-1]}")
+                        data.append([sample_type, leader_type, num_agents, implementation_type, run, last_step_result, alpha])
 
                 filename = f"{impl_prefix}{sample_type}_{leader_type}_{num_agents**2}"
                 results = np.array(results)
@@ -79,3 +89,6 @@ for num_agents in num_agents_options:
             filename = f"comp_{sample_type}_{leader_type}_{num_agents**2}"
             plot_results(result=comp_results, name=f"{num_agents} agents, {sample_type}, {leader_type}", save_location=save_location, save_path=filename)
             print(f"average msd last timestep total: {filename}: old: {comp_results[0][-1]} - new: {comp_results[1][-1]}")
+
+df = pd.DataFrame(data, columns=["sample_type", "leader_type", "num_agents", "implementation_type", "run", "last_step_result", "alpha"])
+df.to_csv(f"{save_location}msd_results.csv", index=False)

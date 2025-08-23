@@ -3,9 +3,6 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
 import data_loader
-from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
-from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
-from random_walk_types.correlated_random_walk import correlated_random_walk_2d
 
 def msd(trajectory, DT=0.05):
     sampling_interval = int(1/DT) 

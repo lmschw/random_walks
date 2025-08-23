@@ -1,14 +1,15 @@
 # Imports
 from MFDFA import MFDFA
-from MFDFA import fgn
 import numpy as np
 import matplotlib.pyplot as plt
 
-from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
+from random_walk_types.levy_walk import levy_walk
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
 from random_walk_types.correlated_random_walk import correlated_random_walk_2d
 
 def compute_hurst_exponent(trajectory, lag, q, order):
+    """ Compute the Hurst exponent using MFDFA.
+        trajectory: 1D numpy array of the trajectory data"""
     lag, dfa = MFDFA(trajectory, lag = lag, q = q, order = order)
 
     plt.loglog(lag, dfa, 'o', label='fOU: MFDFA q=2')
@@ -25,6 +26,7 @@ def compute_hurst_exponent(trajectory, lag, q, order):
         return alpha
     
 def run_for_trajectory(trajectory):
+    """ Run the Hurst exponent calculation for a given 2D trajectory. """
     lag = np.unique(np.logspace(0.5, 3, 100).astype(int))
     # Notice these must be ints, since these will segment
     # the data into chucks of lag size
@@ -41,6 +43,8 @@ def run_for_trajectory(trajectory):
     return H_x, H_y, np.average([H_x, H_y])
 
 if __name__ == "__main__":
+    """ Main function to run the Hurst exponent calculation on the test implementations of 
+        different types of random walks. """
     t_final = 2000
     delta_t = 0.01
 

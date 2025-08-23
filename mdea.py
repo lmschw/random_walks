@@ -1,15 +1,33 @@
 """
 copied and adapted from https://github.com/garland-culbreth/pymdea/
+
+MIT License
+
+Copyright (c) 2023 Garland Culbreth
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 """
 
 import logging
-from pathlib import Path
 from typing import Literal, Self
 
 import numpy as np
-import polars as pl
-import stochastic.processes.continuous
-import stochastic.processes.noise
 from rich import box
 from rich.console import Console
 from rich.progress import (
@@ -30,10 +48,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 import pickle
-
-from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
-from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
-from random_walk_types.correlated_random_walk import correlated_random_walk_2d
 
 def _power_log(x: float, a: float, b: float) -> float:
     """Log power law for curve fit."""
@@ -394,46 +408,15 @@ class DeaPlotter:
         sns.despine(left=True, bottom=True)
         self.fig_mu_candidates = fig
 
-STEPS = 100000
 
-DIST_TYPE = 3
-A = 1.5         
-B = 1
-#trajectory_l = levy_walk_simulation(STEPS, DIST_TYPE, A, B)
-# trajectory_l = levy_walk(STEPS, A)
-# trajectory_b = brownian_motion_2d_without_sigma(STEPS)
-# trajectory_c = correlated_random_walk_2d(STEPS)
-
-# print("Lévy")
-# dea_engine = DeaEngine(trajectory_l)
-# dea_engine.analyze_with_stripes(fit_start=0.1, fit_stop=0.9, n_stripes=60)
-
-# dea_plot = DeaPlotter(dea_engine)
-# dea_plot.s_vs_l()
-# #dea_plot.mu_candidates()
-# plt.show()
-
-# print('Brownian')
-# dea_engine = DeaEngine(trajectory_b)
-# dea_engine.analyze_with_stripes(fit_start=0.1, fit_stop=0.9, n_stripes=60)
-
-# dea_plot = DeaPlotter(dea_engine)
-# dea_plot.s_vs_l()
-# #dea_plot.mu_candidates()
-
-# plt.show()
-
-# print('CRW')
-# dea_engine = DeaEngine(trajectory_c)
-# dea_engine.analyze_with_stripes(fit_start=0.1, fit_stop=0.9, n_stripes=60)
-
-# dea_plot = DeaPlotter(dea_engine)
-# dea_plot.s_vs_l()
-# #dea_plot.mu_candidates()
-
-# plt.show()
 
 if __name__ == "__main__":
+    """ Runs MDEA on saved trajectories from random walk simulations. """
+    STEPS = 100000
+    DIST_TYPE = 3
+    A = 1.5         
+    B = 1
+
     deltas = []
     mu1s = []
     mu2s = []

@@ -14,7 +14,7 @@ def velocity_autocorrelation(trajectory):
     return vacf
 
 for n in [1, 25, 49, 100]:
-    for type in ['brown']:
+    for type in ['brown', 'levy', 'correlated']:
         for i in range(1,4):
             filename = f"{type}_free_{n}_run{i}"
             trajectory = data_loader.load_data(f"c:/Users/lschw/dev/mas-random-walk/mas_random_walk/results/2D/2025-03-20_11-21-14/{filename}.pickle")

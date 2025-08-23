@@ -3,11 +3,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
-from random_walk_types.levy_walk import levy_walk_simulation, levy_walk, levy_walk_2
+from random_walk_types.levy_walk import levy_walk
 from random_walk_types.brownian_motion import brownian_motion_2d_without_sigma
 from random_walk_types.correlated_random_walk import correlated_random_walk_2d
 
 def velocity_autocorrelation(trajectory):
+    """Compute the Velocity Autocorrelation Function (VACF) for a 2D trajectory."""
     velocities = np.diff(trajectory)
     n = len(velocities)
     vacf = np.zeros(n-1)
@@ -72,6 +73,7 @@ def plot_vacf_msd_and_boxplot(trajectory, motion_type):
     plt.show()
 
 if __name__ == "__main__":
+    """Main function to run simulations and plot results."""
     STEPS = 1000000
 
     DIST_TYPE = 3

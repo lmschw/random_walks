@@ -3,13 +3,9 @@ copied and adapted from https://github.com/garland-culbreth/pymdea/
 """
 
 import logging
-from pathlib import Path
 from typing import Literal, Self
 
 import numpy as np
-import polars as pl
-import stochastic.processes.continuous
-import stochastic.processes.noise
 from rich import box
 from rich.console import Console
 from rich.progress import (
