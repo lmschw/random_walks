@@ -1,10 +1,7 @@
 
 
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy.stats import levy_stable
-from hurst import compute_Hc
-from scipy.optimize import curve_fit
 
 # Simulation 
 STEPS = 1000
