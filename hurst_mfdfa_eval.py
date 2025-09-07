@@ -18,7 +18,7 @@ dimension = "2D"
 implementation_types = ["old", "new"]
 
 basepath = "J:/leader_emergence/results/2D/res/"
-save_location = "mdfdfa_results/"
+save_location = "results/mfdfa_results/"
 
 data = []
 for num_agents in num_agents_options:

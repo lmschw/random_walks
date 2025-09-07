@@ -18,7 +18,7 @@ dimension = "2D"
 implementation_types = ["old", "new"]
 
 basepath = "J:/leader_emergence/results/2D/res/"
-save_location = "mdea_results/"
+save_location = "results/mdea_results/"
 
 data = []
 for num_agents in num_agents_options:
